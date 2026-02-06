@@ -20,9 +20,10 @@ export default function App() {
 
     // Example 2
     const checkout2 = createCheckout(pricingRules);
-    checkout2.addToCart("9781430219484");
-    checkout2.addToCart("9781430219484");
-    checkout2.addToCart("9781430219484");
+    for (let i = 0; i < 3; i++) {
+      checkout2.addToCart("9781430219484");
+    }
+    
     checkout2.addToCart("9780132071482");
 
     setExample2Total(checkout2.total());
