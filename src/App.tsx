@@ -7,26 +7,24 @@ export default function App() {
   const [example2Total, setExample2Total] = useState<number | null>(null);
 
   useEffect(() => {
-    const checkout1 = createCheckout(pricingRules);
+    // Wrap in a microtask to avoid sync setState warning
+    queueMicrotask(() => {
+      // Example 1
+      const checkout1 = createCheckout(pricingRules);
+      for (let i = 0; i < 10; i++) {
+        checkout1.addToCart("9780201835953");
+      }
+      checkout1.addToCart("9325336028278");
+      setExample1Total(checkout1.total());
 
-    // Example 1
-    for (let i = 0; i < 10; i++) {
-      checkout1.addToCart("9780201835953");
-    }
-    checkout1.addToCart("9325336028278");
-    
-    setExample1Total(checkout1.total());
-
-
-    // Example 2
-    const checkout2 = createCheckout(pricingRules);
-    for (let i = 0; i < 3; i++) {
-      checkout2.addToCart("9781430219484");
-    }
-    
-    checkout2.addToCart("9780132071482");
-
-    setExample2Total(checkout2.total());
+      // Example 2
+      const checkout2 = createCheckout(pricingRules);
+      for (let i = 0; i < 3; i++) {
+        checkout2.addToCart("9781430219484");
+      }
+      checkout2.addToCart("9780132071482");
+      setExample2Total(checkout2.total());
+    });
   }, []);
 
   return (
